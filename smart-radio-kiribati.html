@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Radio Kiribati</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --red:#b30000;
+      --blue:#001b4d;
+      --gold:#ffd700;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:linear-gradient(180deg, #001b4d 0%, #003f8c 40%, #001020 100%);
+      color:#fff;
+    }
+    header {
+      padding:16px;
+      text-align:center;
+      background:var(--red);
+      color:var(--gold);
+      font-weight:700;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+    main {
+      padding:16px;
+      max-width:640px;
+      margin:0 auto 72px auto;
+    }
+    .card {
+      background:rgba(0,0,0,.35);
+      border-radius:14px;
+      padding:16px 16px 18px;
+      margin-bottom:16px;
+      box-shadow:0 8px 20px rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    h2 {
+      margin:0 0 8px;
+      font-size:18px;
+    }
+    p { margin:4px 0 8px; font-size:14px; line-height:1.5; }
+    button {
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:999px;
+      font-size:15px;
+      font-weight:600;
+      background:var(--gold);
+      color:var(--red);
+      cursor:pointer;
+      box-shadow:0 4px 10px rgba(0,0,0,.4);
+    }
+    button:active { transform:scale(.98); }
+    .primary { margin-top:8px; }
+    .pill {
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    ul { padding-left:18px; margin:6px 0; font-size:14px; }
+    li { margin-bottom:4px; }
+    .mini {
+      position:fixed;
+      left:0; right:0; bottom:0;
+      background:#000814;
+      border-top:1px solid rgba(255,255,255,.12);
+      padding:8px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      font-size:13px;
+    }
+    .mini-main {
+      display:flex;
+      flex-direction:column;
+    }
+    .mini-title { font-weight:600; }
+    .mini-sub { opacity:.7; font-size:12px; }
+    .mini-btn {
+      border:none;
+      border-radius:999px;
+      padding:6px 14px;
+      font-size:12px;
+      font-weight:600;
+      background:var(--gold);
+      color:var(--red);
+      cursor:pointer;
+    }
+    audio { width:100%; margin-top:10px; }
+  </style>
+</head>
+<body>
+  <header>Smart Radio Kiribati</header>
+
+  <main>
+    <!-- LIVE RADIO -->
+    <section class="card">
+      <div class="pill">Live from Tarawa • 🇰🇮</div>
+      <h2>Radio Kiribati Stream</h2>
+      <p>Tap play to listen to Radio Kiribati anywhere in the world.</p>
+      <button class="primary" onclick="toggleRadio()">
+        <span id="playLabel">▶ Play Radio Kiribati</span>
+      </button>
+      <audio id="radioPlayer" preload="none">
+        <source src="https://streamer5.rightclickitservices.com:19790/stream" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <p style="font-size:12px;opacity:.7;margin-top:6px;">
+        Stream: streamer5.rightclickitservices.com:19790/stream
+      </p>
+    </section>
+
+    <!-- PROGRAM SCHEDULE (STATIC FOR NOW) -->
+    <section class="card">
+      <div class="pill">Program schedule</div>
+      <h2>Example Daily Line‑up</h2>
+      <ul>
+        <li><strong>06:00</strong> – Morning Devotion</li>
+        <li><strong>07:00</strong> – News in Kiribati</li>
+        <li><strong>12:00</strong> – Midday Music & Messages</li>
+        <li><strong>18:00</strong> – Evening News & Talk</li>
+        <li><strong>20:00</strong> – Music & Culture Programs</li>
+      </ul>
+      <p style="font-size:12px;opacity:.8;">
+        Later you can load this from JSON or a Google Sheet for live updates.
+      </p>
+    </section>
+
+    <!-- ANNOUNCEMENTS -->
+    <section class="card">
+      <div class="pill">Community</div>
+      <h2>Announcements</h2>
+      <p><strong>Sample items:</strong></p>
+      <ul>
+        <li>Boat schedule updates</li>
+        <li>Weather and marine warnings</li>
+        <li>Church and community events</li>
+      </ul>
+      <p style="font-size:12px;opacity:.8;">
+        You can later connect this to a small API or a simple JSON file you update.
+      </p>
+    </section>
+
+    <!-- CONNECT -->
+    <section class="card">
+      <div class="pill">Connect</div>
+      <h2>Contact Radio Kiribati</h2>
+      <p>Update these with real details from BPA / Radio Kiribati.</p>
+      <button onclick="window.location.href='tel:+68673052619'">Call Radio Kiribati</button><br><br>
+      <button onclick="window.location.href='https://radio.bpa.org.ki/'">Listen Live</button><br><br>
+      <button onclick="window.location.href='https://www.facebook.com/rknews21'">Facebook Page</button>
+    </section>
+  </main>
+
+  <!-- MINI PLAYER BAR -->
+  <div class="mini">
+    <div class="mini-main">
+      <span class="mini-title">Radio Kiribati • Live</span>
+      <span class="mini-sub" id="miniStatus">Stopped</span>
+    </div>
+    <button class="mini-btn" onclick="toggleRadio()">
+      <span id="miniPlayLabel">Play</span>
+    </button>
+  </div>
+
+  <script>
+    const audio = document.getElementById('radioPlayer');
+    const playLabel = document.getElementById('playLabel');
+    const miniPlayLabel = document.getElementById('miniPlayLabel');
+    const miniStatus = document.getElementById('miniStatus');
+
+    function setUI(isPlaying) {
+      if (isPlaying) {
+        playLabel.textContent = '⏸ Pause Radio Kiribati';
+        miniPlayLabel.textContent = 'Pause';
+        miniStatus.textContent = 'Now playing';
+      } else {
+        playLabel.textContent = '▶ Play Radio Kiribati';
+        miniPlayLabel.textContent = 'Play';
+        miniStatus.textContent = 'Stopped';
+      }
+    }
+
+    function toggleRadio() {
+      if (audio.paused) {
+        audio.play().then(() => setUI(true)).catch(err => {
+          console.error(err);
+          alert('Tap again to allow audio playback on this device.');
+        });
+      } else {
+        audio.pause();
+        setUI(false);
+      }
+    }
+
+    audio.addEventListener('playing', () => setUI(true));
+    audio.addEventListener('pause', () => setUI(false));
+    audio.addEventListener('ended', () => setUI(false));
+  </script>
+</body>
+</html>
